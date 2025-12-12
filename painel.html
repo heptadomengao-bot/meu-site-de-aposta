@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel</title>
+</head>
+<body>
+
+<script>
+// bloqueia acesso se não estiver logado
+if (localStorage.getItem("logado") !== "sim") {
+    window.location.href = "login.html";
+}
+</script>
+
+<h1>Bem-vindo ao painel!</h1>
+<p>Você está logado.</p>
+
+<button onclick="sair()">Sair</button>
+
+<script>
+function sair() {
+    localStorage.removeItem("logado");
+    window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>
