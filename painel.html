@@ -1,29 +1,132 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel - Plataforma Fictícia</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f3f3f3;
+    }
+
+    .topo {
+        background: #ffffff;
+        padding: 15px;
+        text-align: center;
+        font-size: 22px;
+        font-weight: 600;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .container {
+        padding: 20px;
+    }
+
+    .card {
+        background: white;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+    }
+
+    .saldo {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        background: #ff8800;
+        color: white;
+        cursor: pointer;
+    }
+
+    button:hover {
+        opacity: 0.8;
+    }
+
+    .sair {
+        background: #cc0000;
+        margin-top: 15px;
+    }
+</style>
 </head>
+
 <body>
 
 <script>
-// bloqueia acesso se não estiver logado
+// bloquear acesso direto
 if (localStorage.getItem("logado") !== "sim") {
     window.location.href = "login.html";
 }
 </script>
 
-<h1>Bem-vindo ao painel!</h1>
-<p>Você está logado.</p>
+<div class="topo">Painel do Usuário</div>
 
-<button onclick="sair()">Sair</button>
+<div class="container">
+
+    <div class="card">
+        <div class="saldo">Saldo fictício: <b id="saldo">R$ 0,00</b></div>
+        <button onclick="adicionarSaldo()">Adicionar R$ 100 de saldo fictício</button>
+    </div>
+
+    <div class="card">
+        <h3>Jogos disponíveis</h3>
+        <button onclick="simularAposta()">Apostar (simulação)</button>
+    </div>
+
+    <button class="sair" onclick="sair()">Sair</button>
+
+</div>
 
 <script>
+let saldo = 0;
+
+function atualizar() {
+    document.getElementById("saldo").innerText =
+        "R$ " + saldo.toFixed(2).replace(".", ",");
+}
+
+function adicionarSaldo() {
+    saldo += 100;
+    atualizar();
+    alert("R$ 100 adicionados ao saldo!");
+}
+
+function simularAposta() {
+    if (saldo <= 0) {
+        alert("Você não tem saldo suficiente.");
+        return;
+    }
+
+    let resultado = Math.random() < 0.5 ? "perdeu" : "ganhou";
+
+    if (resultado === "ganhou") {
+        saldo += 50;
+        alert("Você GANHOU R$ 50!");
+    } else {
+        saldo -= 50;
+        alert("Você PERDEU R$ 50!");
+    }
+
+    atualizar();
+}
+
 function sair() {
     localStorage.removeItem("logado");
     window.location.href = "login.html";
 }
+
+atualizar();
 </script>
 
 </body>
